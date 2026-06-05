@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission — RoadSafe VIC</title>
+
+    <!-- Link to your shared stylesheet (same one your teammate uses) -->
+    <link rel="stylesheet" href="src/main/resources/css/common.css" />
+
+    <!-- Extra styles just for the mission page -->
+    <style>
+        /* ── Hero block ─────────────────────────────────────────────── */
+        .mission-hero {
+            background: var(--navy);
+            color: #fff;
+            text-align: center;
+            padding: 64px 32px 56px;
+            border-radius: 4px;
+            margin-top: 28px;
+            margin-bottom: 28px;
+        }
+
+        .mission-hero h1 {
+            margin: 0 0 12px;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .mission-hero .subtitle {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.75);
+        }
+
+        /* placeholder note — remove once you hook up the database */
+        .mission-hero .db-note {
+            display: inline-block;
+            margin: 0 0 28px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.45);
+            font-style: italic;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 11px 22px;
+            border-radius: 3px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.15s, border-color 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+        }
+
+        /* ── How to use ─────────────────────────────────────────────── */
+        .how-to-use {
+            background: var(--grey-50);
+            border: 1px solid var(--grey-200);
+            border-radius: 4px;
+            padding: 32px 28px;
+            margin-bottom: 28px;
+        }
+
+        .how-to-use h2 {
+            margin: 0 0 24px;
+            font-size: 1.1rem;
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .step-card {
+            background: #fff;
+            border: 1px solid var(--grey-200);
+            border-radius: 4px;
+            padding: 22px 20px;
+        }
+
+        .step-num-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--red);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 50%;
+            margin-bottom: 12px;
+        }
+
+        .step-card h3 {
+            margin: 0 0 6px;
+            font-size: 0.95rem;
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .step-card p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: var(--grey-500);
+            line-height: 1.5;
+        }
+
+        /* ── Personas section ───────────────────────────────────────── */
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .persona-card {
+            background: #fff;
+            border: 1px solid var(--grey-200);
+            border-radius: 4px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: box-shadow 0.15s;
+        }
+
+        .persona-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+        }
+
+        .persona-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .persona-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #fff;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Give each persona a different accent colour */
+        .persona-card:nth-child(1) .persona-avatar { background: var(--navy); }
+        .persona-card:nth-child(2) .persona-avatar { background: #2a6496; }
+
+        .persona-name {
+            margin: 0 0 2px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .persona-role {
+            margin: 0;
+            font-size: 0.82rem;
+            color: var(--grey-500);
+        }
+
+        .persona-body p {
+            margin: 0 0 8px;
+            font-size: 0.88rem;
+            color: var(--grey-700);
+            line-height: 1.55;
+        }
+
+        .persona-body p:last-child { margin-bottom: 0; }
+
+        .persona-tag {
+            display: inline-block;
+            background: var(--grey-100);
+            color: var(--grey-700);
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-bottom: 4px;
+        }
+
+        .view-profile-btn {
+            align-self: flex-start;
+            background: var(--grey-50);
+            color: var(--navy);
+            border: 1px solid var(--grey-200);
+            padding: 8px 16px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+
+        .view-profile-btn:hover { background: var(--grey-100); }
+
+        /* ── Team section ───────────────────────────────────────────── */
+        .team-panel {
+            background: var(--grey-50);
+            border: 1px solid var(--grey-200);
+            border-radius: 4px;
+            padding: 28px;
+            margin-bottom: 28px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .team-member {
+            background: #fff;
+            border: 1px solid var(--grey-200);
+            border-radius: 4px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .member-initial {
+            width: 36px;
+            height: 36px;
+            background: var(--navy);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .member-name {
+            margin: 0 0 2px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .member-id {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--grey-500);
+            font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        }
+
+        /* ── Responsive ─────────────────────────────────────────────── */
+        @media (max-width: 760px) {
+            .steps-grid { grid-template-columns: 1fr; }
+            .personas-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr; }
+            .mission-hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+  
+    <nav class="topnav">
+        <a href="index.html" class="logo">RoadSafe VIC</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="misson.html" class="active">Mission</a>
+            <a href="peoplesummary.html">Explore Data</a>
+            <a href="peopledeepdive.html">Deep Dive</a>
+            <a href="#about">About</a>
+        </div>
+    </nav>
+
+
+    
+    <section class="mission-hero">
+        <h1>Our Mission</h1>
+        <p class="subtitle">
+            Helping Victorian commuters understand the human side of road incidents
+        </p>
+        <!-- When connected to DB, the paragraph below will come from the database -->
+        <p class="db-note">[ mission text from DB ]</p>
+        <div class="hero-buttons">
+            <a href="peoplesummary.html" class="btn btn-primary">Explore Data</a>
+            <a href="#how-to-use" class="btn-secondary">Learn More</a>
+        </div>
+    </section>
+
+
+   
+    <section class="how-to-use" id="how-to-use">
+        <h2>How to use this site</h2>
+        <div class="steps-grid">
+
+            <div class="step-card">
+                <div class="step-num-badge">01</div>
+                <h3>Pick a topic</h3>
+                <p>
+                    Choose what aspect of road safety you want to explore —
+                    injuries, vehicle types, or dangerous combinations
+                    involving people.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-num-badge">02</div>
+                <h3>Filter the data</h3>
+                <p>
+                    Use the dropdowns and checkboxes to narrow the data down
+                    to the vehicle type, injury outcome, age group, or year
+                    range that matters to you.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-num-badge">03</div>
+                <h3>Discover patterns</h3>
+                <p>
+                    The Deep Dive page ranks dangerous combinations by how far
+                    above average their fatal rate is — surfacing facts that
+                    basic summaries would hide.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+   
+    <div class="section-header">
+        <h2>Who we built this for</h2>
+        <span class="sql-note">// personas from DB</span>
+    </div>
+
+    <div class="personas-grid">
+
+        <!-- Persona 1 — Jupiter (Subtask B persona) -->
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-avatar">J</div>
+                <div>
+                    <p class="persona-name">Jupiter</p>
+                    <p class="persona-role">25 · Anxious commuter · Melbourne, VIC</p>
+                </div>
+            </div>
+            <div class="persona-body">
+                <p>
+                    A fresh graduate who recently started working in the CBD
+                    but lives in a remote western suburb. She relies on her
+                    car for daily freeway commutes and feels scared driving
+                    next to heavy trucks.
+                </p>
+                <p>
+                    <strong>Goal:</strong> Understand crash data involving heavy vehicles
+                    so she can build confidence and make safer decisions on the road.
+                </p>
+                <div>
+                    <span class="persona-tag">Daily freeway commute</span>
+                    <span class="persona-tag">Heavy vehicle anxiety</span>
+                    <span class="persona-tag">Injury outcomes</span>
+                </div>
+            </div>
+            <a href="peoplesummary.html" class="view-profile-btn">View her data →</a>
+        </div>
+
+        <!-- Persona 2 — Sarah (Subtask A persona) -->
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-avatar">S</div>
+                <div>
+                    <p class="persona-name">Sarah Nguyen</p>
+                    <p class="persona-role">38 · Senior Road Safety Analyst · DTP</p>
+                </div>
+            </div>
+            <div class="persona-body">
+                <p>
+                    Sarah works in the Policy &amp; Research section at the
+                    Department of Transport and Planning. She reverse-engineers
+                    crashes to develop safer infrastructure strategies.
+                </p>
+                <p>
+                    <strong>Goal:</strong> Filter crash data by atmospheric, road surface,
+                    and lighting conditions to identify high-risk combinations
+                    for policy reports.
+                </p>
+                <div>
+                    <span class="persona-tag">Road surface analysis</span>
+                    <span class="persona-tag">Atmospheric conditions</span>
+                    <span class="persona-tag">Policy briefings</span>
+                </div>
+            </div>
+            <a href="index.html" class="view-profile-btn">View her data →</a>
+        </div>
+
+    </div>
+
+
+    
+    <div class="team-panel" id="about">
+        <div class="section-header" style="margin-top:0;">
+            <h2>Meet the team</h2>
+            <span class="sql-note">// team from DB</span>
+        </div>
+        <div class="team-grid">
+
+            <div class="team-member">
+                <div class="member-initial">T</div>
+                <div>
+                    <p class="member-name">Tamoghna Kabi</p>
+                    <p class="member-id">s4217352 · Sub-Task A</p>
+                </div>
+            </div>
+
+            <div class="team-member">
+                <div class="member-initial">O</div>
+                <div>
+                    <p class="member-name">Orion Barua Britta</p>
+                    <p class="member-id">s4235260 · Sub-Task B</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        <p>
+            <a href="index.html">Home</a> ·
+            <a href="misson.html">Mission</a> ·
+            <a href="peoplesummary.html">Explore Data</a> ·
+            <a href="peopledeepdive.html">Deep Dive</a>
+        </p>
+        <p>RMIT University · COSC2803 Programming Studio · S1 2026</p>
+    </footer>
+
+</body>
+</html>
